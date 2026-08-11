@@ -1,0 +1,38 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.hanoak/pexels-mcp-server",
+  "title": "Pexels MCP Server",
+  "description": "MCP server for the Pexels API: search & fetch stock photos, videos, and collections.",
+  "version": "1.0.0",
+  "websiteUrl": "https://github.com/hanoak/pexels-mcp-server#readme",
+  "repository": {
+    "url": "https://github.com/hanoak/pexels-mcp-server",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "@hanoak/pexels-mcp-server",
+      "version": "1.0.0",
+      "runtimeHint": "npx",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "PEXELS_API_KEY",
+          "description": "Your Pexels API key (sent as the Authorization header, no prefix).",
+          "isRequired": true,
+          "isSecret": true
+        },
+        {
+          "name": "LOG_LEVEL",
+          "description": "Log verbosity; all logs go to stderr.",
+          "default": "info",
+          "choices": ["debug", "info", "warn", "error"]
+        }
+      ]
+    }
+  ]
+}
