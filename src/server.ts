@@ -3,6 +3,9 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 
 import { loadConfig } from './config.js'
 import { logger } from './lib/logger.js'
+import { createRedactor } from './lib/redact.js'
+import { PexelsClient } from './pexels/client.js'
+import { registerTools, type ToolContext } from './tools/index.js'
 import { PACKAGE_NAME, PACKAGE_VERSION } from './version.js'
 
 /** Server identity reported to MCP clients (sourced from the shared version module). */
@@ -18,30 +21,34 @@ export const SERVER_INSTRUCTIONS =
   'This server provides read-only access to the Pexels photo and video library.'
 
 /**
- * Build the MCP server instance. Tools/resources/prompts are registered here
- * in later units; for now this returns a bare, connectable server so we have
- * a green, runnable baseline.
+ * Build the MCP server and register its tools against the injected context.
+ * Pure and dependency-injected — tests pass a fake client via `ctx`.
+ * Resources/prompts are registered here too once later units add them.
  */
-export function createServer(): McpServer {
+export function createServer(ctx: ToolContext): McpServer {
   const server = new McpServer(
     { name: SERVER_NAME, version: SERVER_VERSION },
     { instructions: SERVER_INSTRUCTIONS },
   )
 
-  // TODO: register Pexels tools, resources, and prompts (added in later units).
+  registerTools(server, ctx)
 
   return server
 }
 
-/** Create the server, wire the stdio transport, and install shutdown handlers. */
+/**
+ * Composition root: fail-fast validate the environment, build the Pexels
+ * client, assemble the server, and wire it to the stdio transport.
+ */
 export async function runServer(): Promise<void> {
   // Fail fast: validate the environment before opening the transport, so a
   // missing key surfaces as a clear startup message, not a cryptic 401 later.
-  loadConfig()
+  const config = loadConfig()
+  const client = new PexelsClient(config)
+  const redact = createRedactor(config.apiKey)
+  const server = createServer({ client, config, redact })
 
-  const server = createServer()
   const transport = new StdioServerTransport()
-
   await server.connect(transport)
   logger.info(`${SERVER_NAME} v${SERVER_VERSION} started on stdio`)
 

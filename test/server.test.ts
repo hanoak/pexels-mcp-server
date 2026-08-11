@@ -1,11 +1,16 @@
 import { describe, expect, it } from 'vitest'
 
+import type { Config } from '../src/config.js'
 import { logger } from '../src/lib/logger.js'
+import { PexelsClient } from '../src/pexels/client.js'
 import { createServer, SERVER_NAME, SERVER_VERSION } from '../src/server.js'
+
+const config: Config = { apiKey: 'test-key' }
+const ctx = { client: new PexelsClient(config), config, redact: (s: string) => s }
 
 describe('createServer', () => {
   it('constructs a connectable MCP server instance', () => {
-    const server = createServer()
+    const server = createServer(ctx)
     expect(server).toBeDefined()
     // The SDK exposes the low-level Server via `.server`.
     expect(server.server).toBeDefined()
