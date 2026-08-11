@@ -20,3 +20,49 @@ describe('resources', () => {
     await client.close()
   })
 })
+
+describe('prompts', () => {
+  it('templates find_photo from the subject argument', async () => {
+    const client = await connect(noFetch)
+    const { prompts } = await client.listPrompts()
+    expect(prompts.some((p) => p.name === 'find_photo')).toBe(true)
+
+    const got = await client.getPrompt({
+      name: 'find_photo',
+      arguments: { subject: 'a foggy pine forest', orientation: 'landscape' },
+    })
+    const text = (got.messages[0]!.content as { type: string; text: string }).text
+    expect(text).toContain('a foggy pine forest')
+    expect(text).toContain('landscape orientation')
+    expect(text).toContain('pexels_search_photos')
+    expect(text).toContain('credit')
+
+    await client.close()
+  })
+
+  it('tolerates an empty optional orientation (clients send "" not undefined)', async () => {
+    const client = await connect(noFetch)
+    const got = await client.getPrompt({
+      name: 'find_photo',
+      arguments: { subject: 'mountains', orientation: '' },
+    })
+    const text = (got.messages[0]!.content as { type: string; text: string }).text
+    expect(text).toContain('mountains')
+    expect(text).not.toContain('orientation')
+
+    await client.close()
+  })
+
+  it('ignores an unrecognized orientation rather than rejecting the call', async () => {
+    const client = await connect(noFetch)
+    const got = await client.getPrompt({
+      name: 'find_photo',
+      arguments: { subject: 'oceans', orientation: 'sideways' },
+    })
+    const text = (got.messages[0]!.content as { type: string; text: string }).text
+    expect(text).toContain('oceans')
+    expect(text).not.toContain('sideways')
+
+    await client.close()
+  })
+})
