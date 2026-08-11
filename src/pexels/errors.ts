@@ -33,8 +33,11 @@ export interface PexelsApiErrorOptions {
 }
 
 /**
- * Error thrown by {@link PexelsClient} for any failed request. Messages are
- * already secret-redacted by the client before construction.
+ * Error used for any Pexels-related failure — thrown by {@link PexelsClient}
+ * (most, but not all, of its throw sites redact the message) or by
+ * tool-layer input validation (never redacted). `toToolError` applies
+ * redaction unconditionally as the actual safety net; don't assume a
+ * message here is already clean just because it came from the client.
  */
 export class PexelsApiError extends Error {
   readonly kind: PexelsErrorKind

@@ -2,7 +2,7 @@
 
 Production-ready, open-source npm package: an MCP (Model Context Protocol) server exposing the Pexels stock photo/video API as tools for LLM clients (Claude Desktop, Cursor, etc.), distributed via `npx`. Same quality bar as the author's prior `@hanoak/unsplash-mcp-server` (shipped v1→v3, 2026-07-22 to 2026-08-08): production-ready, legally sound, robust, easy to maintain, expected to get real community traction.
 
-This file absorbs the one-time bootstrap doc that seeded this project (originally `docs/PEXELS_MCP_BOOTSTRAP.md`, transplanted from lessons learned building `unsplash-mcp-server`) as living, ongoing instructions rather than a disposable kickoff note. The current build plan lives at `docs/ROADMAP.md`.
+This file absorbs the one-time bootstrap doc that seeded this project (originally `docs/PEXELS_MCP_BOOTSTRAP.md`, transplanted from lessons learned building `unsplash-mcp-server`) as living, ongoing instructions rather than a disposable kickoff note. Project status and the forward-looking roadmap live at `docs/ROADMAP.md`.
 
 ## Tech stack (settled, don't relitigate)
 

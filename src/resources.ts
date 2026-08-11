@@ -2,7 +2,12 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 
 const USAGE_GUIDE_URI = 'pexels://guides/usage'
 
-/** Human/model-readable usage guide, mirroring the server `instructions`. */
+/**
+ * Human/model-readable usage guide, covering the same license ground as the
+ * server `instructions` (they're not an exact mirror: this adds the
+ * no-bulk-download/no-cloning restriction and omits the untrusted-text
+ * directive, which only makes sense addressed to the model at init time).
+ */
 const USAGE_GUIDE = [
   '# Using Pexels photos & videos',
   '',

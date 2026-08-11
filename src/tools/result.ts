@@ -19,8 +19,9 @@ export function toJsonResult(payload: unknown): CallToolResult {
 /**
  * Map any thrown error to an MCP result with `isError: true`, so recoverable
  * failures come back as content the model can see and adapt to — never as a
- * thrown JSON-RPC protocol error. The message is redacted defense-in-depth
- * (PexelsApiError messages are already redacted by the client).
+ * thrown JSON-RPC protocol error. This redaction call is the one guaranteed
+ * safety net: not every PexelsApiError throw site redacts its own message
+ * (see the type's doc comment), so this must not be treated as optional.
  */
 export function toToolError(error: unknown, redact: Redactor = noRedact): CallToolResult {
   return { content: [{ type: 'text', text: redact(errorText(error)) }], isError: true }
