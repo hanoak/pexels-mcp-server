@@ -1,0 +1,26 @@
+{
+  "config": {
+    // Prettier's default proseWrap is "preserve" — prose in this repo is
+    // intentionally left unwrapped, and GitHub renders long lines as normal
+    // wrapped paragraphs regardless. Line-length doesn't fit that workflow.
+    "MD013": false,
+    // Needed for the GitHub-native <details>/<summary> collapsible sections
+    // used throughout README.md.
+    "MD033": false,
+    // LICENSE and .github/PULL_REQUEST_TEMPLATE.md intentionally don't open
+    // with an H1: LICENSE follows the universal MIT license text verbatim,
+    // and GitHub shows a PR's title separately from the template body.
+    "MD041": false,
+    // GitHub issue templates conventionally use bold text ("**Describe the
+    // bug**") rather than real headings to stay visually compact — the
+    // standard convention GitHub's own template generator produces.
+    "MD036": false,
+  },
+  // Only actual markdown files are meant to be linted as markdown.
+  // LICENSE (plain legal text) and .github/CODEOWNERS (GitHub's own
+  // `#`-comment syntax, unrelated to markdown headings) aren't markdown,
+  // even though a lang-detection heuristic might otherwise treat them as
+  // such.
+  "globs": ["**/*.md"],
+  "ignores": ["node_modules", "dist", "coverage"],
+}
