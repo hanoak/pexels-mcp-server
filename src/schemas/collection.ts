@@ -26,7 +26,6 @@ export const CollectionMediaItemSchema = z.object({
   avg_color: z.string().nullish(),
   src: PhotoSrcSchema.optional(),
   alt: z.string().nullish(),
-  liked: z.boolean().optional(),
   // Video-only fields.
   image: z.string().optional(),
   duration: z.number().optional(),
@@ -51,14 +50,11 @@ export type Collection = z.infer<typeof CollectionSchema>
 export const FeaturedCollectionsResponseSchema = PaginationSchema.extend({
   collections: z.array(CollectionSchema).default([]),
 })
-export type FeaturedCollectionsResponse = z.infer<typeof FeaturedCollectionsResponseSchema>
 
 export const MyCollectionsResponseSchema = PaginationSchema.extend({
   collections: z.array(CollectionSchema).default([]),
 })
-export type MyCollectionsResponse = z.infer<typeof MyCollectionsResponseSchema>
 
 export const CollectionMediaResponseSchema = PaginationSchema.extend({
   media: z.array(CollectionMediaItemSchema).default([]),
 })
-export type CollectionMediaResponse = z.infer<typeof CollectionMediaResponseSchema>

@@ -22,7 +22,6 @@ export const PhotoSrcSchema = z.object({
   landscape: z.string().optional(),
   tiny: z.string().optional(),
 })
-export type PhotoSrc = z.infer<typeof PhotoSrcSchema>
 
 export const PhotoSchema = z.object({
   id: z.number(),
@@ -35,17 +34,13 @@ export const PhotoSchema = z.object({
   avg_color: z.string().nullish(),
   src: PhotoSrcSchema.optional(),
   alt: z.string().nullish(),
-  // Whether the account that owns the API key has liked this photo.
-  liked: z.boolean().optional(),
 })
 export type Photo = z.infer<typeof PhotoSchema>
 
 export const SearchPhotosResponseSchema = PaginationSchema.extend({
   photos: z.array(PhotoSchema).default([]),
 })
-export type SearchPhotosResponse = z.infer<typeof SearchPhotosResponseSchema>
 
 export const CuratedPhotosResponseSchema = PaginationSchema.extend({
   photos: z.array(PhotoSchema).default([]),
 })
-export type CuratedPhotosResponse = z.infer<typeof CuratedPhotosResponseSchema>

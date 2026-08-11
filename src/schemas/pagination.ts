@@ -13,4 +13,3 @@ export const PaginationSchema = z.object({
   next_page: z.string().nullish(),
   prev_page: z.string().nullish(),
 })
-export type Pagination = z.infer<typeof PaginationSchema>
