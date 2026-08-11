@@ -85,7 +85,7 @@ const searchPhotosInput = {
     .trim()
     .min(1)
     .optional()
-    .describe('The locale of the search, e.g. "en-US", "fr-FR" (26 supported locales).'),
+    .describe('The locale of the search, e.g. "en-US", "fr-FR" (28 supported locales).'),
   page: z.number().int().min(1).default(1).describe('Page number, 1-based.'),
   per_page: z
     .number()

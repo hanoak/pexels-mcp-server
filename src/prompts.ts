@@ -24,7 +24,11 @@ function pickNonEmpty(value: string | undefined): string | undefined {
   return trimmed ? trimmed : undefined
 }
 
-/** Parse a prompt's optional numeric arg (also always a string), clamped to [1, max]. */
+/**
+ * Parse a prompt's optional numeric arg (also always a string). A valid
+ * value ≥1 is capped at `max`; a missing, non-numeric, or below-1 value
+ * falls back to `fallback` rather than being clamped up to 1.
+ */
 function clampCount(value: string | undefined, fallback: number, max: number): number {
   const n = value ? Number.parseInt(value, 10) : NaN
   return Number.isFinite(n) && n >= 1 ? Math.min(n, max) : fallback

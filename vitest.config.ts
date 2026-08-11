@@ -13,9 +13,11 @@ export default defineConfig({
         // stdout-purity test, which in-process v8 coverage cannot observe.
         'src/index.ts',
       ],
-      // Regression floor, set a few points below current coverage (89.97/
-      // 88.68/84.5/91.21 as measured 2026-08-11). Raise as the suite grows;
-      // a real drop fails CI (`npm run test:coverage`).
+      // Regression floor, set a few points below the suite's coverage when
+      // first measured (89.97/88.68/84.5/91.21 as of the coverage-gate
+      // commit; the suite has since grown past that, currently ~91/89/87/92
+      // as of 2026-08-11). Raise the floor as the suite grows; a real drop
+      // fails CI (`npm run test:coverage`).
       thresholds: {
         statements: 85,
         branches: 83,

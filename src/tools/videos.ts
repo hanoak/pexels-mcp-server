@@ -14,7 +14,7 @@ import { toJsonResult, toToolError } from './result.js'
 
 const MAX_PER_PAGE = 80
 
-// Same 27-code list documented for /search — duplicated rather than shared
+// Same 28-code list documented for /search — duplicated rather than shared
 // with photos.ts so each domain file stays self-contained (see CLAUDE.md
 // folder conventions: no cross-domain abstractions until real duplication
 // forces a third instance, and collections has no locale param).
@@ -77,7 +77,7 @@ const searchVideosInput = {
     .trim()
     .min(1)
     .optional()
-    .describe('The locale of the search, e.g. "en-US", "fr-FR" (26 supported locales).'),
+    .describe('The locale of the search, e.g. "en-US", "fr-FR" (28 supported locales).'),
   page: z.number().int().min(1).default(1).describe('Page number, 1-based.'),
   per_page: z
     .number()
