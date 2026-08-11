@@ -1,0 +1,21 @@
+# Enforce the feature-branch workflow: refuse direct commits to main/master.
+branch="$(git symbolic-ref --short HEAD 2>/dev/null || echo '')"
+if [ "$branch" = "main" ] || [ "$branch" = "master" ]; then
+  echo "✗ Refusing to commit directly to '$branch'. Commit on the 'feature' branch instead." >&2
+  exit 1
+fi
+
+# Scan staged changes for secrets (e.g. a leaked PEXELS_API_KEY).
+# Skip gracefully if gitleaks isn't installed — CI runs the authoritative scan.
+if command -v gitleaks >/dev/null 2>&1; then
+  if ! gitleaks protect --staged --redact --no-banner; then
+    echo "✗ gitleaks found a potential secret in staged changes. Commit aborted." >&2
+    exit 1
+  fi
+else
+  echo "⚠ gitleaks not installed — skipping local secret scan (CI still scans)." >&2
+  echo "  Install: https://github.com/gitleaks/gitleaks" >&2
+fi
+
+# Format & lint only the staged files (fast).
+npx lint-staged

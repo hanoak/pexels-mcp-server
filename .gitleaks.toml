@@ -1,0 +1,18 @@
+title = "gitleaks configuration for pexels-mcp-server"
+
+# Use gitleaks' built-in ruleset, then apply the project allowlist below.
+[extend]
+useDefault = true
+
+# Test spec files use fake, non-functional credential fixtures (e.g. a dummy
+# PEXELS_API_KEY) so the config/redaction code can be exercised. These are
+# not real secrets. The allowlist matches both the known fixture value and the
+# test-spec path, so a real key committed elsewhere is still caught.
+[allowlist]
+description = "Fake credential fixtures in test spec files"
+regexes = [
+  '''abc123def456''',
+]
+paths = [
+  '''test/.*\.test\.ts$''',
+]

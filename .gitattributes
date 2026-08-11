@@ -1,0 +1,6 @@
+# Normalize all text files to LF in the working tree on every platform.
+# Keeps prettier --check green on Windows CI and protects the bin shebang.
+* text=auto eol=lf
+
+# Shell hooks/scripts are always LF.
+*.sh text eol=lf
