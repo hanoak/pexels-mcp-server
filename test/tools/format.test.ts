@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
 
 import type { Photo } from '../../src/schemas/photo.js'
-import { buildCredit, toCompactPhoto } from '../../src/tools/format.js'
+import type { Video } from '../../src/schemas/video.js'
+import { buildCredit, toCompactPhoto, toCompactVideo } from '../../src/tools/format.js'
 
 const photo: Photo = {
   id: 123,
@@ -70,5 +71,79 @@ describe('toCompactPhoto', () => {
     const compact = toCompactPhoto({ id: 1 })
     expect(compact.alt).toBeNull()
     expect(compact.avg_color).toBeNull()
+  })
+})
+
+function makeVideoFile(height: number, quality: string): Video['video_files'][number] {
+  return {
+    id: height,
+    quality,
+    file_type: 'video/mp4',
+    width: Math.round((height * 16) / 9),
+    height,
+    fps: 25,
+    link: `https://videos.pexels.com/${height}.mp4`,
+  }
+}
+
+const video: Video = {
+  id: 456,
+  width: 3840,
+  height: 2160,
+  url: 'https://www.pexels.com/video/456',
+  image: 'https://images.pexels.com/videos/456/preview.jpg',
+  duration: 30,
+  user: { id: 7, name: 'Jane Doe', url: 'https://www.pexels.com/@janedoe' },
+  video_files: [
+    makeVideoFile(2160, 'hd'),
+    makeVideoFile(1080, 'hd'),
+    makeVideoFile(720, 'hd'),
+    makeVideoFile(480, 'sd'),
+    makeVideoFile(360, 'sd'),
+    makeVideoFile(240, 'sd'),
+    makeVideoFile(144, 'sd'),
+  ],
+  video_pictures: [
+    { id: 1, picture: 'https://images.pexels.com/videos/456/pic1.jpg', nr: 0 },
+    { id: 2, picture: 'https://images.pexels.com/videos/456/pic2.jpg', nr: 1 },
+  ],
+}
+
+describe('toCompactVideo', () => {
+  it('trims video_files to the top 5 by height, sorted descending, with a full count', () => {
+    const compact = toCompactVideo(video)
+    expect(compact.video_files).toHaveLength(5)
+    expect(compact.video_files.map((f) => f.height)).toEqual([2160, 1080, 720, 480, 360])
+    expect(compact.video_files_count).toBe(7)
+  })
+
+  it('returns every rendition when fullFiles is requested', () => {
+    const compact = toCompactVideo(video, { fullFiles: true })
+    expect(compact.video_files).toHaveLength(7)
+    expect(compact.video_files_count).toBe(7)
+  })
+
+  it('projects only the first preview picture, with a full count', () => {
+    const compact = toCompactVideo(video)
+    expect(compact.preview_picture).toContain('pic1.jpg')
+    expect(compact.video_pictures_count).toBe(2)
+  })
+
+  it('nulls out missing quality/dimensions on a video file', () => {
+    const compact = toCompactVideo({
+      id: 1,
+      video_files: [{ id: 1, link: 'https://videos.pexels.com/1.mp4' }],
+      video_pictures: [],
+    })
+    expect(compact.video_files[0]).toMatchObject({ quality: null, width: null, height: null })
+    expect(compact.preview_picture).toBeUndefined()
+  })
+
+  it('handles a video with no files or pictures', () => {
+    const compact = toCompactVideo({ id: 1, video_files: [], video_pictures: [] })
+    expect(compact.video_files).toEqual([])
+    expect(compact.video_files_count).toBe(0)
+    expect(compact.preview_picture).toBeUndefined()
+    expect(compact.video_pictures_count).toBe(0)
   })
 })
