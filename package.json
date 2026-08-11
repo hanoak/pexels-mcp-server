@@ -1,6 +1,6 @@
 {
   "name": "@hanoak/pexels-mcp-server",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Production-ready Model Context Protocol (MCP) server for the Pexels API — search and browse photos and videos, with license-aware usage guidance. Unofficial; not affiliated with or endorsed by Pexels.",
   "keywords": [
     "mcp",
