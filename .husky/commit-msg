@@ -1,0 +1,2 @@
+# Enforce Conventional Commits (feat/fix/docs/chore/...) on the commit message.
+npx --no-install commitlint --edit "$1"
