@@ -64,8 +64,11 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "check": "npm run typecheck && npm run lint && npm run format:check && npm run test",
+    "check:package": "npm run build && publint && attw --pack . --profile esm-only",
     "audit:prod": "npm audit --omit=dev --audit-level=high",
     "license:check": "license-checker-rseidelsohn --production --onlyAllow \"MIT;ISC;BSD-2-Clause;BSD-3-Clause;Apache-2.0;0BSD;CC0-1.0;Unlicense;BlueOak-1.0.0;Python-2.0\"",
+    "changeset": "changeset",
+    "release": "changeset publish",
     "prepublishOnly": "npm run build",
     "prepare": "husky"
   },
@@ -74,6 +77,8 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
+    "@changesets/cli": "^2.31.1",
     "@commitlint/cli": "^21.2.1",
     "@commitlint/config-conventional": "^21.2.0",
     "@eslint/js": "^10.0.1",
@@ -86,6 +91,7 @@
     "license-checker-rseidelsohn": "^4.4.2",
     "lint-staged": "^16.4.0",
     "prettier": "^3.9.6",
+    "publint": "^0.3.22",
     "tsup": "^8.5.1",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.65.0",

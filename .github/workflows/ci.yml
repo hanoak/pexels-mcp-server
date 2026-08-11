@@ -34,6 +34,25 @@ jobs:
       # Fail if a production dependency ships a non-permissive (e.g. copyleft) license.
       - run: npm run license:check
 
+  package:
+    name: Package validation (publint + attw)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      # Validate the publishable package: exports map, types resolution, bin.
+      - run: npx publint
+      - run: npx attw --pack . --profile esm-only
+      # The published bin must respond to --version without hanging on stdio.
+      - run: node dist/index.js --version
+      # Confirm the tarball ships only dist/ + README + LICENSE (no source leak).
+      - run: npm pack --dry-run
+
   test:
     name: Test & build (Node ${{ matrix.node }} / ${{ matrix.os }})
     runs-on: ${{ matrix.os }}
