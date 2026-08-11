@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.1
+
+### Patch Changes
+
+- fd0c169: Add an `mcpName` field to `package.json` so the package can be listed on the official MCP Registry (registry.modelcontextprotocol.io). No runtime or API changes.
+
 ## 1.0.0
 
 ### Major Changes
