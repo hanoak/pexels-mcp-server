@@ -162,7 +162,7 @@ Everything below was built and verified for the first release; the few remaining
 
 ## 13. Discovery & ecosystem
 
-- [ ] `[v1]` List on the official MCP registry (`server.json` manifest) + community catalogs — **pending**, planned for immediately after v1 ships (see the build plan's discovery phase)
+- [x] `[v1]` List on the official MCP registry (`server.json` manifest) + community catalogs — the main way people discover MCP servers ✅ published to the official registry as `io.github.hanoak/pexels-mcp-server`; listed on Glama (`glama.json`); [awesome-mcp-servers PR](https://github.com/punkpeye/awesome-mcp-servers/pull/11948) open, awaiting merge; PulseMCP ingests from the official registry automatically (no manual submission), not yet indexed as of this writing; mcp.so not yet submitted. **Smithery deferred**: its onboarding now needs a hosted HTTPS URL, a maintainer-hosted endpoint, or a local `.mcpb` bundle — none of which this stdio-only `npx` server has; revisit if a `.mcpb` bundle is ever built.
 
 ## 14. Governance
 
