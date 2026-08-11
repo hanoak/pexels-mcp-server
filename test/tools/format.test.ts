@@ -29,7 +29,6 @@ const photo: Photo = {
     tiny: 'https://images.pexels.com/photos/123/tiny.jpg',
   },
   alt: 'A cat on a sofa',
-  liked: false,
 }
 
 describe('buildCredit', () => {

@@ -9,8 +9,9 @@ import { PaginationSchema } from './pagination.js'
 
 export const VideoFileSchema = z.object({
   id: z.number().optional(),
-  // Documented values are just "hd"/"sd", but kept as a lenient string in
-  // case Pexels adds a value — this is a response schema, not a tool input.
+  // Pexels' field-type docs list only "hd"/"sd", but its own example
+  // responses already include a third value, "hls" — kept as a lenient
+  // string since even the vendor's docs are inconsistent about the full set.
   quality: z.string().nullish(),
   file_type: z.string().optional(),
   width: z.number().nullish(),
@@ -18,21 +19,18 @@ export const VideoFileSchema = z.object({
   fps: z.number().optional(),
   link: z.string().optional(),
 })
-export type VideoFile = z.infer<typeof VideoFileSchema>
 
 export const VideoPictureSchema = z.object({
   id: z.number().optional(),
   picture: z.string().optional(),
   nr: z.number().optional(),
 })
-export type VideoPicture = z.infer<typeof VideoPictureSchema>
 
 export const VideoUserSchema = z.object({
   id: z.number().optional(),
   name: z.string().optional(),
   url: z.string().optional(),
 })
-export type VideoUser = z.infer<typeof VideoUserSchema>
 
 export const VideoSchema = z.object({
   id: z.number(),
@@ -50,9 +48,7 @@ export type Video = z.infer<typeof VideoSchema>
 export const SearchVideosResponseSchema = PaginationSchema.extend({
   videos: z.array(VideoSchema).default([]),
 })
-export type SearchVideosResponse = z.infer<typeof SearchVideosResponseSchema>
 
 export const PopularVideosResponseSchema = PaginationSchema.extend({
   videos: z.array(VideoSchema).default([]),
 })
-export type PopularVideosResponse = z.infer<typeof PopularVideosResponseSchema>

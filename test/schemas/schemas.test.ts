@@ -31,8 +31,9 @@ const photoFixture = {
     tiny: 'https://images.pexels.com/photos/123/tiny.jpg',
   },
   alt: 'A cat on a sofa',
+  // Fields we do not model (Pexels returns `liked`, but nothing consumes it) —
+  // must be tolerated and stripped, not rejected.
   liked: false,
-  // A field we do not model — must be tolerated and stripped, not rejected.
   sponsorship: { tagline: 'sponsored' },
 }
 
