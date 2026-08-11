@@ -3,7 +3,7 @@
   "name": "io.github.hanoak/pexels-mcp-server",
   "title": "Pexels MCP Server",
   "description": "MCP server for the Pexels API: search & fetch stock photos, videos, and collections.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "websiteUrl": "https://github.com/hanoak/pexels-mcp-server#readme",
   "repository": {
     "url": "https://github.com/hanoak/pexels-mcp-server",
@@ -14,7 +14,7 @@
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "@hanoak/pexels-mcp-server",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "runtimeHint": "npx",
       "transport": {
         "type": "stdio"
