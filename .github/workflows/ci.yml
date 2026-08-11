@@ -29,6 +29,10 @@ jobs:
       - run: npm run format:check
       # Fail only on high+ advisories in production deps (dev-only noise is excluded).
       - run: npm run audit:prod
+      # Enforce the coverage floor (thresholds live in vitest.config.ts).
+      - run: npm run test:coverage
+      # Fail if a production dependency ships a non-permissive (e.g. copyleft) license.
+      - run: npm run license:check
 
   test:
     name: Test & build (Node ${{ matrix.node }} / ${{ matrix.os }})
