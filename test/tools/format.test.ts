@@ -2,7 +2,12 @@ import { describe, expect, it } from 'vitest'
 
 import type { Photo } from '../../src/schemas/photo.js'
 import type { Video } from '../../src/schemas/video.js'
-import { buildCredit, toCompactPhoto, toCompactVideo } from '../../src/tools/format.js'
+import {
+  buildCredit,
+  toCompactCollection,
+  toCompactPhoto,
+  toCompactVideo,
+} from '../../src/tools/format.js'
 
 const photo: Photo = {
   id: 123,
@@ -145,5 +150,34 @@ describe('toCompactVideo', () => {
     expect(compact.video_files_count).toBe(0)
     expect(compact.preview_picture).toBeUndefined()
     expect(compact.video_pictures_count).toBe(0)
+  })
+})
+
+describe('toCompactCollection', () => {
+  it('projects a full collection', () => {
+    const compact = toCompactCollection({
+      id: 'abc123',
+      title: 'Nature',
+      description: 'Nature photos and videos',
+      private: false,
+      media_count: 10,
+      photos_count: 8,
+      videos_count: 2,
+    })
+    expect(compact).toEqual({
+      id: 'abc123',
+      title: 'Nature',
+      description: 'Nature photos and videos',
+      private: false,
+      media_count: 10,
+      photos_count: 8,
+      videos_count: 2,
+    })
+  })
+
+  it('nulls out missing title/description', () => {
+    const compact = toCompactCollection({ id: 'x' })
+    expect(compact.title).toBeNull()
+    expect(compact.description).toBeNull()
   })
 })
