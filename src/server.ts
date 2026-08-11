@@ -5,6 +5,7 @@ import { loadConfig } from './config.js'
 import { logger } from './lib/logger.js'
 import { createRedactor } from './lib/redact.js'
 import { PexelsClient } from './pexels/client.js'
+import { registerPrompts } from './prompts.js'
 import { registerResources } from './resources.js'
 import { registerTools, type ToolContext } from './tools/index.js'
 import { PACKAGE_NAME, PACKAGE_VERSION } from './version.js'
@@ -42,9 +43,9 @@ export const SERVER_INSTRUCTIONS = [
 ].join('\n')
 
 /**
- * Build the MCP server and register its tools/resources against the injected
- * context. Pure and dependency-injected — tests pass a fake client via `ctx`.
- * Prompts are registered here too once a later unit adds them.
+ * Build the MCP server and register its tools/resources/prompts against the
+ * injected context. Pure and dependency-injected — tests pass a fake client
+ * via `ctx`.
  */
 export function createServer(ctx: ToolContext): McpServer {
   const server = new McpServer(
@@ -54,6 +55,7 @@ export function createServer(ctx: ToolContext): McpServer {
 
   registerTools(server, ctx)
   registerResources(server)
+  registerPrompts(server)
 
   return server
 }
