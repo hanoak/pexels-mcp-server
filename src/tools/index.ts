@@ -2,6 +2,7 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 
 import type { Config } from '../config.js'
 import type { PexelsClient } from '../pexels/client.js'
+import { registerCollectionTools } from './collections.js'
 import { registerPhotoTools } from './photos.js'
 import { registerVideoTools } from './videos.js'
 
@@ -24,4 +25,5 @@ export interface ToolContext {
 export function registerTools(server: McpServer, ctx: ToolContext): void {
   registerPhotoTools(server, ctx)
   registerVideoTools(server, ctx)
+  registerCollectionTools(server, ctx)
 }

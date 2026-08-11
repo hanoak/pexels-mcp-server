@@ -1,3 +1,4 @@
+import type { Collection } from '../schemas/collection.js'
 import type { Photo } from '../schemas/photo.js'
 import type { Video } from '../schemas/video.js'
 
@@ -169,5 +170,29 @@ export function toCompactVideo(video: Video, options: { fullFiles?: boolean } = 
     video_files_count: video.video_files.length,
     preview_picture: video.video_pictures[0]?.picture,
     video_pictures_count: video.video_pictures.length,
+  }
+}
+
+/** Token-efficient projection of a collection's metadata for tool output. */
+export interface CompactCollection {
+  readonly id: string
+  readonly title: string | null
+  readonly description: string | null
+  readonly private: boolean | undefined
+  readonly media_count: number | undefined
+  readonly photos_count: number | undefined
+  readonly videos_count: number | undefined
+}
+
+/** Project full collection metadata into the compact shape returned by tools. */
+export function toCompactCollection(collection: Collection): CompactCollection {
+  return {
+    id: collection.id,
+    title: collection.title ?? null,
+    description: collection.description ?? null,
+    private: collection.private,
+    media_count: collection.media_count,
+    photos_count: collection.photos_count,
+    videos_count: collection.videos_count,
   }
 }
