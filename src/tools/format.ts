@@ -26,6 +26,7 @@ export interface CompactPhoto {
   readonly url: string | undefined
   readonly src: {
     readonly original: string | undefined
+    readonly large2x: string | undefined
     readonly large: string | undefined
     readonly medium: string | undefined
     readonly small: string | undefined
@@ -120,6 +121,7 @@ export function toCompactPhoto(photo: Photo): CompactPhoto {
     url: photo.url,
     src: {
       original: photo.src?.original,
+      large2x: photo.src?.large2x,
       large: photo.src?.large,
       medium: photo.src?.medium,
       small: photo.src?.small,

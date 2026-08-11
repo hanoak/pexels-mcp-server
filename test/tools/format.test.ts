@@ -63,6 +63,7 @@ describe('toCompactPhoto', () => {
     expect(compact.id).toBe(123)
     expect(compact.alt).toBe('A cat on a sofa')
     expect(compact.src.original).toContain('original.jpg')
+    expect(compact.src.large2x).toContain('large2x.jpg')
     expect(compact.photographer).toEqual({
       name: 'Jane Doe',
       url: 'https://www.pexels.com/@janedoe',
