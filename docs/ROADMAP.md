@@ -5,7 +5,7 @@
 > box (`[ ]` → `[x]`) as each item lands. Nothing here is "done" until it's tested.
 
 **Status legend:** `[ ]` not started · `[~]` in progress · `[x]` done
-**Scope:** every item is `[v1]`. Unlike a typical staged rollout, this is the *entire*
+**Scope:** every item is `[v1]`. Unlike a typical staged rollout, this is the _entire_
 documented Pexels API in one release — Pexels has a single auth tier (one API key,
 no OAuth, no write endpoints), so there's no auth-boundary split to defer work behind.
 This file will be repurposed into a permanent status + roadmap doc once v1 ships
@@ -16,7 +16,7 @@ This file will be repurposed into a permanent status + roadmap doc once v1 ships
 ## 0. Core stack decisions (foundational)
 
 - [x] `[v1]` Language/runtime: **TypeScript + Node** ✅ decided
-- [ ] `[v1]` Runtime validation with **zod** (tool inputs *and* Pexels API responses)
+- [ ] `[v1]` Runtime validation with **zod** (tool inputs _and_ Pexels API responses)
 - [x] `[v1]` Transport: **stdio** first (HTTP/SSE possible later) ✅ decided
 - [x] `[v1]` Module format: **ESM-only** ✅ decided (MCP SDK is ESM; simplest for a bin package)
 - [x] `[v1]` Node version target: **Node 20+** ✅ decided (Node 18 is EOL)
@@ -61,7 +61,7 @@ live docs before relying on them; don't assume they stay this way forever.
 - [ ] `[v1]` Retries & backoff for 429/5xx (respect `Retry-After`)
 - [ ] `[v1]` Network timeouts (never hang forever)
 - [ ] `[v1]` Rate-limit awareness: read `X-Ratelimit-Remaining`, surface it
-- [ ] `[v1]` **Handle 429 = rate limit exceeded** (standard, unlike Unsplash's 403-for-quota quirk) — the rate-limit headers are reportedly *absent* on the 429 response itself, so cache the last-seen `X-Ratelimit-Reset` from a prior 2xx and report from that cache
+- [ ] `[v1]` **Handle 429 = rate limit exceeded** (standard, unlike Unsplash's 403-for-quota quirk) — the rate-limit headers are reportedly _absent_ on the 429 response itself, so cache the last-seen `X-Ratelimit-Reset` from a prior 2xx and report from that cache
 - [ ] `[v1]` **Quota short-circuit**: once `remaining` hits 0, fail fast with a clear "quota exhausted until `<reset time>`" error instead of firing a doomed request — the 200 req/hour ceiling is tight and has no documented free-tier upgrade path
 - [ ] `[v1]` Short-TTL in-memory metadata cache — **defer unless real quota pressure appears**; the quota short-circuit above is the cheaper first mitigation
 
