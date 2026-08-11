@@ -1,6 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 
+import { loadConfig } from './config.js'
 import { logger } from './lib/logger.js'
 import { PACKAGE_NAME, PACKAGE_VERSION } from './version.js'
 
@@ -34,6 +35,10 @@ export function createServer(): McpServer {
 
 /** Create the server, wire the stdio transport, and install shutdown handlers. */
 export async function runServer(): Promise<void> {
+  // Fail fast: validate the environment before opening the transport, so a
+  // missing key surfaces as a clear startup message, not a cryptic 401 later.
+  loadConfig()
+
   const server = createServer()
   const transport = new StdioServerTransport()
 
