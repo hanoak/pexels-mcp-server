@@ -63,6 +63,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "check": "npm run typecheck && npm run lint && npm run format:check && npm run test",
+    "audit:prod": "npm audit --omit=dev --audit-level=high",
     "prepublishOnly": "npm run build",
     "prepare": "husky"
   },
