@@ -35,7 +35,7 @@ jobs:
       # When changesets exist, opens/updates a "Version Packages" PR. When that
       # PR is merged (bumping the version + CHANGELOG), publishes to npm with
       # provenance. Requires an NPM_TOKEN repo secret (a granular publish token).
-      - uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0
+      - uses: changesets/action@8488615a623b1b9c987934bb89eae8af6a946ac1 # v2.1.1
         with:
           version: npx changeset version
           publish: npm run release
